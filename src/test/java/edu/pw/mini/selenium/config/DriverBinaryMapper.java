@@ -1,17 +1,29 @@
-package com.lazerycode.selenium.config;
+package edu.pw.mini.selenium.config;
+
+import static edu.pw.mini.selenium.config.DriverBinaryContext.binaryFor;
+import static edu.pw.mini.selenium.config.DriverBinaryContext.binaryPath;
+import static edu.pw.mini.selenium.config.DriverType.CHROME;
+import static edu.pw.mini.selenium.config.DriverType.IE;
+import static edu.pw.mini.selenium.config.DriverType.useRemoteWebDriver;
+import static edu.pw.mini.selenium.config.OperatingSystem.LINUX;
+import static edu.pw.mini.selenium.config.OperatingSystem.MAC;
+import static edu.pw.mini.selenium.config.OperatingSystem.WINDOWS;
+import static edu.pw.mini.selenium.config.SystemArchitecture.ARCHITECTURE_32_BIT;
+import static edu.pw.mini.selenium.config.SystemArchitecture.ARCHITECTURE_64_BIT;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.lazerycode.selenium.config.DriverBinaryContext.binaryFor;
-import static com.lazerycode.selenium.config.DriverBinaryContext.binaryPath;
-import static com.lazerycode.selenium.config.DriverType.*;
-import static com.lazerycode.selenium.config.OperatingSystem.*;
-import static com.lazerycode.selenium.config.SystemArchitecture.ARCHITECTURE_32_BIT;
-import static com.lazerycode.selenium.config.SystemArchitecture.ARCHITECTURE_64_BIT;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class DriverBinaryMapper {
-    private static final Map<DriverBinaryContext, String> binaryLocation = new HashMap<DriverBinaryContext, String>() {{
+    private static final Map<DriverBinaryContext, String> binaryLocation = new HashMap<DriverBinaryContext, String>() {/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2691117178027221015L;
+
+	{
         put(binaryFor(CHROME, WINDOWS, ARCHITECTURE_64_BIT), binaryPath("/windows/googlechrome/64bit/2.10/chromedriver.exe"));
         put(binaryFor(CHROME, MAC, ARCHITECTURE_64_BIT), binaryPath("/osx/googlechrome/64bit/2.10/chromedriver"));
         put(binaryFor(CHROME, LINUX, ARCHITECTURE_64_BIT), binaryPath("/linux/googlechrome/64bit/2.10/chromedriver"));
@@ -35,7 +47,7 @@ public class DriverBinaryMapper {
 
             if (null != binarySystemProperty && binarySystemProperty.length() != 0) {
                 final String binaryConfiguration = binaryLocation.get(binaryFor(driverType, operatingSystem, systemArchitecture));
-                System.out.println("Setting System Property '" + binarySystemProperty + "'='" + binaryConfiguration + "'");
+                log.info("Setting System Property '" + binarySystemProperty + "'='" + binaryConfiguration + "'");
                 System.setProperty(binarySystemProperty, binaryConfiguration);
             }
         }

@@ -1,18 +1,25 @@
-package com.lazerycode.selenium;
+package edu.pw.mini.selenium;
 
-import com.lazerycode.selenium.config.DriverType;
-import com.lazerycode.selenium.listeners.ScreenshotListener;
+import static edu.pw.mini.selenium.config.DriverType.determineEffectiveDriverType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import edu.pw.mini.selenium.config.DriverType;
+import edu.pw.mini.selenium.listeners.ScreenshotListener;
 
-import static com.lazerycode.selenium.config.DriverType.determineEffectiveDriverType;
+/**
+ * @author SAMBATH
+ *
+ */
 
 @Listeners(ScreenshotListener.class)
 public class DriverFactory {
@@ -28,7 +35,8 @@ public class DriverFactory {
         driverThread = new ThreadLocal<WebDriver>() {
             @Override
             protected WebDriver initialValue() {
-                final WebDriver webDriver = desiredDriver.configureDriverBinaryAndInstantiateWebDriver();
+                final WebDriver webDriver = desiredDriver.configureDriverBinaryAndInstantiateWebDriver();                
+                webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 webDriverPool.add(webDriver);
                 return webDriver;
             }

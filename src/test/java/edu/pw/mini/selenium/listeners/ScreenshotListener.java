@@ -1,4 +1,4 @@
-package com.lazerycode.selenium.listeners;
+package edu.pw.mini.selenium.listeners;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -11,8 +11,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.lazerycode.selenium.DriverFactory.getDriver;
+import lombok.extern.log4j.Log4j;
+import static edu.pw.mini.selenium.DriverFactory.getDriver;
 
+/**
+ * @author SAMBATH
+ *
+ */
+@Log4j
 public class ScreenshotListener extends TestListenerAdapter {
 
     private boolean createFile(File screenshot) {
@@ -40,7 +46,7 @@ public class ScreenshotListener extends TestListenerAdapter {
             screenshotStream.write(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
             screenshotStream.close();
         } catch (IOException unableToWriteScreenshot) {
-            System.err.println("Unable to write " + screenshot.getAbsolutePath());
+            log.error("Unable to write " + screenshot.getAbsolutePath());
             unableToWriteScreenshot.printStackTrace();
         }
     }
@@ -57,9 +63,9 @@ public class ScreenshotListener extends TestListenerAdapter {
             } catch (ClassCastException weNeedToAugmentOurDriverObject) {
                 writeScreenshotToFile(new Augmenter().augment(driver), screenshot);
             }
-            System.out.println("Written screenshot to " + screenshotAbsolutePath);
+            log.info("Written screenshot to " + screenshotAbsolutePath);
         } else {
-            System.err.println("Unable to create " + screenshotAbsolutePath);
+            log.error("Unable to create " + screenshotAbsolutePath);
         }
     }
 }

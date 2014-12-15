@@ -1,6 +1,17 @@
-package com.lazerycode.selenium.config;
+package edu.pw.mini.selenium.config;
 
-import com.opera.core.systems.OperaDriver;
+import static edu.pw.mini.selenium.config.DriverBinaryMapper.configureBinary;
+import static edu.pw.mini.selenium.config.DriverBinaryMapper.getBinaryPath;
+import static edu.pw.mini.selenium.config.OperatingSystem.getOperatingSystem;
+import static edu.pw.mini.selenium.config.SystemArchitecture.getSystemArchitecture;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import lombok.extern.log4j.Log4j;
+
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,16 +24,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
+import com.opera.core.systems.OperaDriver;
 
-import static com.lazerycode.selenium.config.DriverBinaryMapper.configureBinary;
-import static com.lazerycode.selenium.config.DriverBinaryMapper.getBinaryPath;
-import static com.lazerycode.selenium.config.OperatingSystem.getOperatingSystem;
-import static com.lazerycode.selenium.config.SystemArchitecture.getSystemArchitecture;
-
+@Log4j
 public enum DriverType implements DriverSetup {
 
     FIREFOX {
@@ -142,18 +146,18 @@ public enum DriverType implements DriverSetup {
         try {
             driverType = valueOf(browser.toUpperCase());
         } catch (IllegalArgumentException ignored) {
-            System.err.println("Unknown driver specified, defaulting to '" + driverType + "'...");
+            log.error("Unknown driver specified, defaulting to '" + driverType + "'...");
         } catch (NullPointerException ignored) {
-            System.err.println("No driver specified, defaulting to '" + driverType + "'...");
+            log.error("No driver specified, defaulting to '" + driverType + "'...");
         }
 
         return driverType;
     }
 
     public WebDriver configureDriverBinaryAndInstantiateWebDriver() {
-        System.out.println("Current Operating System: " + operatingSystem.getOperatingSystemType());
-        System.out.println("Current Architecture: " + systemArchitecture.getSystemArchitectureType());
-        System.out.println("Current Browser Selection: " + this);
+        log.info("Current Operating System: " + operatingSystem.getOperatingSystemType());
+        log.info("Current Architecture: " + systemArchitecture.getSystemArchitectureType());
+        log.info("Current Browser Selection: " + this);
 
         configureBinary(this, operatingSystem, systemArchitecture);
 

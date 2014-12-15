@@ -1,4 +1,4 @@
-package com.lazerycode.selenium.config;
+package edu.pw.mini.selenium.config;
 
 import java.util.Arrays;
 import java.util.List;

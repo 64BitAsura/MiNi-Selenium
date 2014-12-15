@@ -1,4 +1,4 @@
-package com.lazerycode.selenium.config;
+package edu.pw.mini.selenium.config;
 
 enum OperatingSystem {
 
