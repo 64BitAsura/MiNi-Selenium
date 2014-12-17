@@ -20,4 +20,14 @@ public class LoginTestSuite extends DriverFactory {
 		wait.until(page.isLoginError());
 	}
 	
+	
+	@Test
+	public void SimpleLoginTest(){
+		AirbnbHomePage page = new AirbnbHomePage().openPage(AirbnbHomePage.class);
+		page.login("vignezds@gmail.com", "v1i1k1i1");
+		WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
+		wait.until(page.isSignedIn());
+	}
+	
+	
 }

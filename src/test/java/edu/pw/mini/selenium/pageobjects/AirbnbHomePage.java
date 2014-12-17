@@ -58,5 +58,9 @@ public class AirbnbHomePage extends AirbnbPage<AirbnbHomePage> {
 	public ExpectedCondition<WebElement> isLoginError(){
 		return ExpectedConditions.visibilityOf(getDriver().findElement(By.id("notice")));
 	}
+	
+	public ExpectedCondition<WebElement> isSignedIn(){
+			return ExpectedConditions.visibilityOf(getDriver().findElement(By.id("header-avatar-trigger")));
+	}
 
 }
