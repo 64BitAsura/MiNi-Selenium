@@ -36,12 +36,9 @@ public class LoginTestSuite extends DriverFactory {
 	public void simpleSignupTest(){
 		AirbnbHomePage page = new AirbnbHomePage().openPage(AirbnbHomePage.class);
 		UUID uuid = UUID.randomUUID();
-		
 		page.doSignUp("first", "last", uuid.toString()+"@cuvox.de", "123456789");
-			
 		WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
 		wait.until(page.isSignedIn());
 	}
-	
-	
+		
 }
